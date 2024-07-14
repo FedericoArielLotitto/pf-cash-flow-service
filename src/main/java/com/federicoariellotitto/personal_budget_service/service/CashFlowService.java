@@ -1,6 +1,7 @@
 package com.federicoariellotitto.personal_budget_service.service;
 
 import com.federicoariellotitto.personal_budget_service.domain.CashFlow;
+import com.federicoariellotitto.personal_budget_service.exception.ResourceNotFoundException;
 import com.federicoariellotitto.personal_budget_service.repository.CashFlowRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,14 @@ public class CashFlowService {
         validateNotNullCreationDateTime(cashFlow);
         validatePresentCurrency(cashFlow);
         validateCashFlowExist(cashFlow.getId());
-        return cashFlowRepository.save(cashFlow);
+
+        var cashFlowToUpdate = cashFlowRepository.findById(cashFlow.getId()).get();
+        cashFlowToUpdate.setAmount(cashFlow.getAmount());
+        cashFlowToUpdate.setType(cashFlow.getType());
+        cashFlowToUpdate.setCurrency(cashFlow.getCurrency());
+        cashFlowToUpdate.setDescription(cashFlow.getDescription());
+
+        return cashFlowRepository.save(cashFlowToUpdate);
     }
 
     private void validateNotNullCreationDateTime(CashFlow cashFlow) {
@@ -47,6 +55,9 @@ public class CashFlowService {
     }
 
     private void validateCashFlowExist(Long id) {
+        if (!cashFlowRepository.existsById(id)) {
+            throw new ResourceNotFoundException("CashFlow", "id", id.toString());
+        }
         Assert.isTrue(cashFlowRepository.findById(id).isPresent(), "CashFlow does not exist");
     }
 
@@ -56,5 +67,6 @@ public class CashFlowService {
 
     public void delete(Long id) {
         validateCashFlowExist(id);
+        cashFlowRepository.deleteById(id);
     }
 }

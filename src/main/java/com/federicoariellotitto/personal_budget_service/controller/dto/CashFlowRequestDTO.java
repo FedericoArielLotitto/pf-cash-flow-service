@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
 import java.util.Currency;
 
 public record CashFlowRequestDTO(
+        @JsonProperty("id")
+        Long id,
         @JsonProperty("amount")
         @NotNull(message = "Amount must be present")
         @Positive(message = "Amount must be positive")
@@ -22,8 +24,6 @@ public record CashFlowRequestDTO(
         Currency currency,
         @JsonProperty("description")
         String description,
-        @JsonProperty("category")
-        Category category,
         @JsonProperty("type")
         String type
 ) {

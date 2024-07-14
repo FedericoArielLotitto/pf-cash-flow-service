@@ -24,11 +24,10 @@ public class CashFlowController {
         var response = CashFlowResponseDTO.builder()
                 .id(persistedCashFlow.getId())
                 .amount(persistedCashFlow.getAmount())
-                .category(persistedCashFlow.getCategory())
                 .description(persistedCashFlow.getDescription())
                 .currency(persistedCashFlow.getCurrency())
                 .creationDateTime(persistedCashFlow.getCreationDateTime())
-                .type(persistedCashFlow.getType().toString())
+                .type(persistedCashFlow.getType())
                 .build();
 
         return ResponseEntity.ok(response);
@@ -40,11 +39,10 @@ public class CashFlowController {
         var response = CashFlowResponseDTO.builder()
                 .id(persistedCashFlow.getId())
                 .amount(persistedCashFlow.getAmount())
-                .category(persistedCashFlow.getCategory())
                 .description(persistedCashFlow.getDescription())
                 .currency(persistedCashFlow.getCurrency())
                 .creationDateTime(persistedCashFlow.getCreationDateTime())
-                .type(persistedCashFlow.getType().toString())
+                .type(persistedCashFlow.getType())
                 .build();
 
         return ResponseEntity.ok(response);
@@ -58,12 +56,13 @@ public class CashFlowController {
 
     private CashFlow toCashFlow(CashFlowRequestDTO cashFlowRequestDTO) {
         var cashFlow = new CashFlow();
+        cashFlow.setId(cashFlowRequestDTO.id());
         cashFlow.setCurrency(cashFlowRequestDTO.currency());
         cashFlow.setDescription(cashFlowRequestDTO.description());
         cashFlow.setAmount(cashFlowRequestDTO.amount());
-        cashFlow.setCategory(cashFlowRequestDTO.category());
         cashFlow.setCreationDateTime(LocalDateTime.now());
-        cashFlow.setType(Type.valueOf(cashFlowRequestDTO.type()));
+        //cashFlow.setType(Type.valueOf(cashFlowRequestDTO.type()));
+        cashFlow.setType(cashFlowRequestDTO.type());
         return cashFlow;
     }
 }

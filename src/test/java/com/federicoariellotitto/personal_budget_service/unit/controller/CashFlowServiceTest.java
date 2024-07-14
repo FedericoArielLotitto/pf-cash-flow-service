@@ -2,6 +2,7 @@ package com.federicoariellotitto.personal_budget_service.unit.controller;
 
 import com.federicoariellotitto.personal_budget_service.builder.CashFlowBuilder;
 import com.federicoariellotitto.personal_budget_service.domain.CashFlow;
+import com.federicoariellotitto.personal_budget_service.exception.ResourceNotFoundException;
 import com.federicoariellotitto.personal_budget_service.repository.CashFlowRepository;
 import com.federicoariellotitto.personal_budget_service.service.CashFlowService;
 import org.junit.jupiter.api.Test;
@@ -11,8 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.math.BigDecimal;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -214,9 +214,9 @@ public class CashFlowServiceTest {
     void delete_givenACashFlowThatDoesNotExist_shouldThrowException() {
         when(cashFlowRepository.findById(any(Long.class))).thenReturn(Optional.empty());
 
-        assertThatIllegalArgumentException().isThrownBy(
+        assertThatExceptionOfType(ResourceNotFoundException.class).isThrownBy(
                 () -> cashFlowService.delete(-1L)
-        ).withMessage("CashFlow does not exist");
+        ).withMessage("CashFlow not found with the given input data id: '-1'");
     }
 
     @Test

@@ -17,8 +17,8 @@ public class CashFlow {
     private LocalDateTime creationDateTime;
     private Currency currency;
     private String description;
-    private Category category;
-    @Enumerated(EnumType.STRING)
-    private Type type;
+    private String type;
+    /*@Enumerated(EnumType.STRING)
+    private Type type;*/
 
 }
