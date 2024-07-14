@@ -1,0 +1,15 @@
+services:
+  db:
+    image: mysql:latest
+    container_name: mysql-container
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+      MYSQL_DATABASE: personal-budget
+      MYSQL_USER: pf-personal-budget-command
+      MYSQL_PASSWORD: pf-personal-budget-command
+    volumes:
+        - ./mysql-data:/var/lib/mysql
+#volumes:
+#  mysql-data:

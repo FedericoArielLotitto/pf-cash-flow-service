@@ -23,7 +23,7 @@ public class CashFlowBuilder {
         this.cashFlow.setId(1L);
         this.cashFlow.setAmount(BigDecimal.TEN);
         this.cashFlow.setCreationDateTime(LocalDateTime.now());
-        this.cashFlow.setTag(null);
+        this.cashFlow.setCategory(null);
         this.cashFlow.setDescription(null);
         this.cashFlow.setCurrency(Currency.getInstance(Locale.getDefault()));
         return this;

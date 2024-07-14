@@ -9,7 +9,6 @@ import java.util.Currency;
 
 @Data
 @Entity
-@Table(name = "cash_flow")
 public class CashFlow {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +17,8 @@ public class CashFlow {
     private LocalDateTime creationDateTime;
     private Currency currency;
     private String description;
-    private Tag tag;
+    private Category category;
+    @Enumerated(EnumType.STRING)
+    private Type type;
 
 }
