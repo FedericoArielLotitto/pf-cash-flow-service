@@ -13,6 +13,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -218,4 +219,13 @@ public class CashFlowServiceTest {
         ).withMessage("CashFlow does not exist");
     }
 
+    @Test
+    void delete_givenACashFlowThatExists_shouldDeleteCashFlow() {
+        var savedCashFlow = CashFlowBuilder.builder().complete().withId(1L).build();
+        when(cashFlowRepository.findById(any(Long.class))).thenReturn(Optional.of(savedCashFlow));
+
+        cashFlowService.delete(1L);
+
+        assertDoesNotThrow(() -> cashFlowService.delete(savedCashFlow.getId()));
+    }
 }
